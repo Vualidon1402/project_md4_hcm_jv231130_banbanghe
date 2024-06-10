@@ -33,7 +33,7 @@ public class UserController {
         return "checkout";
     }
 
-    @GetMapping("/service")
+    @GetMapping("/services")
     public String service() {
         return "service";
     }
