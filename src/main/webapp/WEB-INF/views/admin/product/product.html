@@ -15,19 +15,22 @@
 
     <link rel="canonical" href="https://demo-basic.adminkit.io/"/>
 
-    <title>Quản lý User</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <title>Quản lý sản phẩm</title>
 
     <link href="/css/app.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
+
 <div class="wrapper">
-    <nav th:replace="~{admin/layout/template :: sidebar(viewName='user')}">
+    <nav th:replace="~{admin/layout/template :: sidebar(viewName='product')}">
 
     </nav>
+
     <div class="main">
         <nav class="navbar navbar-expand navbar-light navbar-bg">
             <a class="sidebar-toggle js-sidebar-toggle mx-2">
@@ -137,7 +140,7 @@
                                 <a href="#" class="list-group-item">
                                     <div class="row g-0 align-items-center">
                                         <div class="col-2">
-                                            <img src="/images/avatars/avatar-2.jpg" class="avatar img-fluid rounded-circle"
+                                            <img src="images/avatars/avatar-2.jpg" class="avatar img-fluid rounded-circle"
                                                  alt="William Harris">
                                         </div>
                                         <div class="col-10 ps-2">
@@ -189,7 +192,7 @@
 
                         <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
                             <img src="/images/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Charles Hall"/>
-                            <span class="text-dark">Kien-Anh</span>
+                            <span class="text-dark">Kiên-Anh</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <a class="dropdown-item" href="#"><i class="align-middle me-1"
@@ -197,8 +200,8 @@
                             <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i>
                                 Analytics</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="index.html"><i class="align-middle me-1"
-                                                                          data-feather="settings"></i> Settings &
+                            <a class="dropdown-item" href="../index.html"><i class="align-middle me-1"
+                                                                             data-feather="settings"></i> Settings &
                                 Privacy</a>
                             <a class="dropdown-item" href="#"><i class="align-middle me-1"
                                                                  data-feather="help-circle"></i> Help Center</a>
@@ -214,15 +217,16 @@
             <div class="container-fluid p-0">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Demo User Table</h3>
+                        <h3 class="card-title">Demo Product Table</h3>
                         <nav class="navbar navbar-expand-lg bg-light">
                             <div class="container-fluid">
-                                <a class="navbar-brand" href="#">
-                                    <button type="button" class="btn btn-success">+ Create new Account</button>
+                                <a class="navbar-brand" href="/admin/product/add">
+                                    <button type="button" class="btn btn-success" >+ Add new Product</button>
                                 </a>
-                                <form class="d-flex" role="search">
+                                <form class="d-flex" role="search" action="/admin/product/search">
                                     <input class="form-control me-2 fst-italic" type="search"
-                                           placeholder="Enter user's name... "
+                                           name="keyword" th:value="${keyword}"
+                                           placeholder="Enter product's name... "
                                            aria-label="Search">
                                     <button class="btn btn-outline-success" type="submit">Search</button>
                                 </form>
@@ -235,222 +239,45 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Username</th>
+                                <th>Name</th>
                                 <th>Image</th>
-                                <th>FullName</th>
-                                <th>Date of birth</th>
-                                <th>About</th>
-                                <th>Status</th>
+                                <th>Price</th>
                                 <th>Created Date</th>
                                 <th colspan="2">Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>user1</td>
-                                <td><img width="40%" src="/images/avatars/avatar-3.jpg" alt="avt"></td>
-                                <td>Kien-Anh</td>
-                                <td>22/02/2022</td>
-                                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                </td>
-                                <td>Online</td>
-                                <td>28/10/2022</td>
-                                <td>
-                                    <button type="button" class="btn btn-success">Unlock</button>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-danger">Lock</button>
-                                </td>
+                            <tr th:each="pro:${products}">
+                                <td th:text="${pro.id}"></td>
+                                <td th:text="${pro.name}"></td>
+                                <td><img th:src="${pro.image}" alt="" width="100" height="100" style=" object-fit: cover"></td>
+                                <td th:text="${pro.price}"></td>
+                                <td th:text="${#dates.format(pro.createdAt,'dd/MM/yyyy')}"></td>
+                                <td><a th:href="|/admin/product/edit?id=${pro.id}|" class="btn btn-warning">Edit</a></td>
+                                <td><a th:href="|/admin/product/delete?id=${pro.id}|" onclick="return confirm('Bạn có chắc  chắn muốn xóa ko ?')" class="btn btn-danger">Delete</a></td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>user2</td>
-                                <td><img width="40%" src="/img/avatars/avatar-3.jpg" alt="avt"></td>
-                                <td>Chris Hung</td>
-                                <td>22/02/2022</td>
-                                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                </td>
-                                <td>Online</td>
-                                <td>28/10/2022</td>
-                                <td>
-                                    <button type="button" class="btn btn-success">Unlock</button>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-danger">Lock</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>user3</td>
-                                <td><img width="40%" src="/img/avatars/avatar-3.jpg" alt="avt"></td>
-                                <td>Chris Hung</td>
-                                <td>22/02/2022</td>
-                                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                </td>
-                                <td>Online</td>
-                                <td>28/10/2022</td>
-                                <td>
-                                    <button type="button" class="btn btn-success">Unlock</button>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-danger">Lock</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>user4</td>
-                                <td><img width="40%" src="/img/avatars/avatar-3.jpg" alt="avt"></td>
-                                <td>Chris Hung</td>
-                                <td>22/02/2022</td>
-                                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                </td>
-                                <td>Online</td>
-                                <td>28/10/2022</td>
-                                <td>
-                                    <button type="button" class="btn btn-success">Unlock</button>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-danger">Lock</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>user5</td>
-                                <td><img width="40%" src="/img/avatars/avatar-3.jpg" alt="avt"></td>
-                                <td>Chris Hung</td>
-                                <td>22/02/2022</td>
-                                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                </td>
-                                <td>Online</td>
-                                <td>28/10/2022</td>
-                                <td>
-                                    <button type="button" class="btn btn-success">Unlock</button>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-danger">Lock</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>user6</td>
-                                <td><img width="40%" src="/img/avatars/avatar-3.jpg" alt="avt"></td>
-                                <td>Chris Hung</td>
-                                <td>22/02/2022</td>
-                                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                </td>
-                                <td>Online</td>
-                                <td>28/10/2022</td>
-                                <td>
-                                    <button type="button" class="btn btn-success">Unlock</button>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-danger">Lock</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>7</td>
-                                <td>user7</td>
-                                <td><img width="40%" src="/img/avatars/avatar-3.jpg" alt="avt"></td>
-                                <td>Chris Hung</td>
-                                <td>22/02/2022</td>
-                                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                </td>
-                                <td>Online</td>
-                                <td>28/10/2022</td>
-                                <td>
-                                    <button type="button" class="btn btn-success">Unlock</button>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-danger">Lock</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>8</td>
-                                <td>user8</td>
-                                <td><img width="40%" src="/img/avatars/avatar-3.jpg" alt="avt"></td>
-                                <td>Chris Hung</td>
-                                <td>22/02/2022</td>
-                                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                </td>
-                                <td>Online</td>
-                                <td>28/10/2022</td>
-                                <td>
-                                    <button type="button" class="btn btn-success">Unlock</button>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-danger">Lock</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>9</td>
-                                <td>user9</td>
-                                <td><img width="40%" src="/img/avatars/avatar-3.jpg" alt="avt"></td>
-                                <td>Chris Hung</td>
-                                <td>22/02/2022</td>
-                                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                </td>
-                                <td>Online</td>
-                                <td>28/10/2022</td>
-                                <td>
-                                    <button type="button" class="btn btn-success">Unlock</button>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-danger">Lock</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td>user10</td>
-                                <td><img width="40%" src="/img/avatars/avatar-3.jpg" alt="avt"></td>
-                                <td>Chris Hung</td>
-                                <td>22/02/2022</td>
-                                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                </td>
-                                <td>Online</td>
-                                <td>28/10/2022</td>
-                                <td>
-                                    <button type="button" class="btn btn-success">Unlock</button>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-danger">Lock</button>
-                                </td>
-                            </tr>
-
+                            
                             </tbody>
 
                         </table>
                     </div>
+                    <!-- /.card-body -->
                     <nav aria-label="Page navigation example ">
                         <ul class="pagination float-end mx-4">
-                            <li class="page-item disabled">
-                                <a class="page-link">Previous</a>
+                            <li th:class="|page-item ${page<=0?'disabled':''}|">
+                                <a class="page-link" th:href="|?page=${page+-1}&limit=${limit}|">Previous</a>
                             </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
+                            <li th:each="p,loop:${#numbers.sequence(1,totalPages)}" th:class="|page-item ${page==loop.index?'active':''}|">
+                                <a class="page-link" th:href="|?page=${loop.index}&limit=${limit}|" th:text="${p}">1</a>
+                            </li>
+                            <li th:class="|page-item ${page+1>=totalPages?'disabled':''}|">
+                                <a class="page-link" th:href="|?page=${page+1}&limit=${limit}|">Next</a>
                             </li>
                         </ul>
                     </nav>
-                    <!-- /.card-body -->
                 </div>
-
             </div>
-
         </main>
-
 
         <footer class="footer">
             <div class="container-fluid">
@@ -483,10 +310,117 @@
         </footer>
     </div>
 </div>
+<!-- Modal Add -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="/admin/product/add" method="post"  enctype="multipart/form-data" th:object="${product}">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" >Add New Product</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+                <label  class="form-label">Product Name</label>
+                <input type="text" class="form-control" th:field="*{name}">
+              </div>
+            <div class="mb-3">
+                <label  class="form-label">Product Image</label>
+                <input type="file" class="form-control" th:field="*{file}">
+                <div id="preview"></div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Descriptions</label>
+                <textarea class="form-control" rows="3" th:field="*{description}"></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Product Price</label>
+                <input type="text" class="form-control" th:field="*{price}" >
+              </div>
+            <div class="mb-3">
+                <label  class="form-label">Product Stock</label>
+                <input type="number" class="form-control" th:field="*{stock}">
+              </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" >ADD</button>
+        </div>
+      </div>
+        </form>
+    </div>
+  </div>
+<!-- Modal edit -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="/admin/product/update" method="post"  enctype="multipart/form-data" th:object="${product}">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" >Edit Product</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" th:field="*{id}" readonly>
+            <div class="mb-3">
+                <label class="form-label">Product Name</label>
+                <input type="text" class="form-control" th:field="*{name}">
+              </div>
+            <div class="mb-3">
+                <label  class="form-label">Product Image</label>
+                <input type="file" class="form-control" th:field="*{file}"><br>
+                <img id="previewUp" src="" alt="" width="100" height="100" style=" object-fit: cover" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Descriptions</label>
+                <textarea class="form-control" rows="3" th:field="*{description}"></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Product Price</label>
+                <input type="text" class="form-control" th:field="*{price}" >
+              </div>
+            <div class="mb-3">
+                <label class="form-label">Product Stock</label>
+                <input type="number" class="form-control" th:field="*{stock}">
+              </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" >Update</button>
+        </div>
+      </div>
+        </form>
+    </div>
+  </div>
+
 
 <script src="/js/app.js"></script>
 
-
+<script>
+    let formEdit  = document.querySelector("#editModal");
+    let idEdit= formEdit.querySelector("#id");
+    let nameEdit= formEdit.querySelector("#name");
+    let imageEdit= formEdit.querySelector("#previewUp");
+    let priceEdit= formEdit.querySelector("#price");
+    let descriptionEdit= formEdit.querySelector("#description");
+    let stockEdit= formEdit.querySelector("#stock");
+        function handleEditProduct (id){
+        console.log("id",id)
+        $.ajax({
+            url: "http://localhost:8080/admin/product/edit/"+id,
+            success: function (res) {
+                console.log("res",res)
+                idEdit.value = res.id;
+                nameEdit.value = res.name;
+                imageEdit.src = res.image;
+                priceEdit.value = res.price;
+                descriptionEdit.innerText = res.description;
+                stockEdit.value = res.stock;
+            }
+        });
+    }
+</script>
 </body>
 
 </html>

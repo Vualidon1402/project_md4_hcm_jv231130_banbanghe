@@ -2,18 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Thêm sản phẩm mới</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="/css/product-add.css">
 </head>
 <body>
-    <h1> Thêm mơi</h1>
     <form action="/admin/product/add" method="post"  enctype="multipart/form-data" th:object="${product}">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" >Add New Product</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <br>
             </div>
             <div class="modal-body">
                 <div class="mb-3">
@@ -45,7 +45,6 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary" >ADD</button>
             </div>
         </div>
