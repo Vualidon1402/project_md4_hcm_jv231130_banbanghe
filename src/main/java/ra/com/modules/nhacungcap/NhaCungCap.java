@@ -1,11 +1,11 @@
-package ra.com.modules.category;
+package ra.com.modules.nhacungcap;
 
 
 import lombok.*;
+import ra.com.modules.products.Product;
 
 import javax.persistence.*;
 import java.util.List;
-
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,13 +13,13 @@ import java.util.List;
 @Setter
 @Builder
 @Entity
-public class Category {
+public class NhaCungCap {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private Boolean isDeleted;
-//    @OneToMany(mappedBy = "category") // bn nghịch đao
-//    private List<Product> products;
+
+    @ManyToMany(mappedBy = "nhaCungCapList")
+    private List<Product> products;
 }
 
