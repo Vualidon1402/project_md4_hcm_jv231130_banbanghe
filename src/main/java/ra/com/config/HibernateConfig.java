@@ -25,7 +25,7 @@ public class HibernateConfig {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setPackagesToScan(new String[] {
-                "com.example.model"
+                "ra.com.modules.users"
         });
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
