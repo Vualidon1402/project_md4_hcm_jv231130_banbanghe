@@ -71,4 +71,8 @@ public class MVCConfig implements WebMvcConfigurer, ApplicationContextAware {
                 .addResourceLocations("/uploads/","classpath:assets/css/","classpath:assets/js/","classpath:assets/images/", "classpath:assets/scss/");
     }
 
+//Interceptor
+
+
+
 }

@@ -20,14 +20,25 @@ public class AdminController {
     private ProductValidator validator;
     @Autowired
     private IProductService productService;
+
     @GetMapping
     public String admin() {
         return "admin/index"; // tên view
     }
+
     @GetMapping("/category")
     public String category() {
         return "admin/category";
     }
+
+
+    @GetMapping("/receipt")
+    public String receipt() {
+        System.out.println("receipt");
+        return "admin/receipt"; }
+
+
+
     @GetMapping("/product")  // prooduct list
     public String product(@RequestParam(value = "page",defaultValue = "0") Integer page,@RequestParam(value = "limit",defaultValue = "3") Integer limit,Model model) {
         // phân trang
@@ -45,16 +56,17 @@ public class AdminController {
         model.addAttribute("page",page);
         model.addAttribute("limit",limit);
         model.addAttribute("product",new ProductRequest());
-        return "admin/product"; // tên view
+        return "admin/product/product"; // tên view
     }
     @GetMapping("/user")
     public String user() {
         return "admin/user";
     }
+
     @GetMapping("/product/add")
     public String add(Model model){
         model.addAttribute("product",new ProductRequest());
-        return "admin/product-add";
+        return "admin/product/product-add";
     }
     // product mananger
     @PostMapping("/product/add")
@@ -62,15 +74,24 @@ public class AdminController {
 //         validator.validate(request,result);
         if (result.hasErrors()){
             model.addAttribute("product",request);
-            return "admin/product-add";
+            return "admin/product/product-add";
         }
         productService.save(request);
         return "redirect:/admin/product"; //điều hướng theo đường dẫn
     }
     @PostMapping("/product/update")
-    public  String doUpdate(@ModelAttribute("product") ProductRequest request){
-        productService.save(request);
-        return "redirect:/admin/product"; //điều hướng theo đường dẫn
+    public String doUpdate(@ModelAttribute("product") ProductRequest request, BindingResult result, Model model){
+        if (result.hasErrors()){
+            model.addAttribute("product", request);
+            return "admin/product/product-edit";
+        }
+        try {
+            productService.save(request);
+        } catch (Exception e) {
+            model.addAttribute("error", "An error occurred while updating the product.");
+            return "admin/product/product-edit";
+        }
+        return "redirect:/admin/product";
     }
     @GetMapping("/product/delete")
     public String doDelete(@RequestParam("id") Integer idDel){
@@ -82,7 +103,7 @@ public class AdminController {
         model.addAttribute("products",productService.searchByName(keyword));
         model.addAttribute("keyword",keyword);
         model.addAttribute("product",new ProductRequest());
-        return "admin/product"; // tên view
+        return "admin/product/product"; // tên view
     }
 
     @GetMapping("/product/edit/{id}")

@@ -34,9 +34,9 @@ public class Product {
     private String description;
     private String image ;
     private Integer stock;
-    @JoinColumn(name = "created_at")
+    @Column(name = "created_at")
     private Date createdAt;
-    @JoinColumn(name = "is_deleted")
+    @Column(name = "is_deleted")
     private Boolean isDeleted;
     // fetch : lấy , load dữ liêu
     // Mặc đinh ManyToOne , và OnetoOne là Eager (load ngay lập tức)

@@ -25,18 +25,18 @@ public class ProductRequest {
 //    @Min() // giá trị nhor nhất
 //    @Max() // gia trị lớn nhất
 private Integer id;
-    @NotBlank(message = "Khong duoc de trong")
+    @NotBlank(message = "Không được để trống")
 //    @Pattern(regexp = "^\\w{6,}$", message = "ít nhất 6 kí tự, ko đc có kí đặc biệt")
     @ProductNameUnique
     private String name;
     @NotNull
-    @Min(value = 0)
+    @Min(value = 0, message = "không được nhỏ hơn 0")
     private Double price;
-    @NotBlank
+    @NotBlank(message = "Không được để trống")
     private String description;
-    @NotNull
+//    @NotNull
     private MultipartFile file;
-    @Min(value = 0, message = "ko duoc nhỏ hon 0")
+    @Min(value = 0, message = "không được nhỏ hơn 0")
     private Integer stock;
     //    @NotNull
     private Integer categoryId;

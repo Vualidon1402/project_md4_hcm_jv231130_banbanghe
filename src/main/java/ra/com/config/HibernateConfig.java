@@ -20,11 +20,13 @@ import java.util.Properties;
 public class HibernateConfig {
     @Autowired
     private Environment env;
+
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan(new String[] {
+        sessionFactory.setPackagesToScan(new String[]{
+
                 "ra.com.modules.users"
         });
         sessionFactory.setHibernateProperties(hibernateProperties());
